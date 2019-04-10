@@ -1,0 +1,8 @@
+
+*.pyc
+*.xml
+*.txt
+
+#ignore folder venv
+Python_(Flask-RESTfull)/venv/
+*.iml
