@@ -22,22 +22,32 @@ public class SoapWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<DevicePart> HelloWorld()
+    public string HelloWorld()
     {
-        List<DevicePart> parts = dbconn.Select();
+        return "Hello World";
+    }
 
+    [WebMethod]
+    public List<DevicePart> AllParts()
+    {
+        List<DevicePart> parts = dbconn.SelectPart("");
         return parts;
     }
 
     [WebMethod]
-    public string getPartsOfDevice(string serienummerToestel)
+    public List<DevicePart> SpecificPart(string partSN)
     {
-        return "Hello World";
+        List<DevicePart> parts = dbconn.SelectPart(partSN); // SN = serienummer
+        return parts;
     }
 
     [WebMethod]
-    public string Ser(string serienummerToestel)
+    public List<Device> AllPartsOfDevice(string deviceSN)
     {
-        return "Hello World";
+        // deze toont de gebruiker de gebruikte onderdelen in een bepaald toestel, zodat ze deze kunnen bestellen
+        List<Device> parts = dbconn.SelectDevice(deviceSN); // SN = serienummer
+        return parts;
     }
+
+   
 }

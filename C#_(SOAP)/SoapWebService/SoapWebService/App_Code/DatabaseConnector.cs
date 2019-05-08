@@ -65,22 +65,55 @@ public class DatabaseConnector
     }
 
     //public List<string>[] Select()
-    public List<DevicePart> Select()
+    public List<DevicePart> SelectPart(string partsn)
     {
-        string query = "SELECT * FROM deviceparts";
-        List<DevicePart> list = new List<DevicePart>();
+        string query = "";
+        if (String.IsNullOrEmpty(partsn)){
+            query = "SELECT * FROM deviceparts";
+        }
+        else
+        {
+            query = "SELECT * FROM deviceparts WHERE deviceparts.sn = '" + partsn + "'";
+        }
         
+        List<DevicePart> list = new List<DevicePart>();
+  
+        if (OpenConnection() == true)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
 
-        /* 
-        List<string>[] list = new List<string>[6];
-        list[0] = new List<string>(); // S/N        (serieummer onderdeel)
-        list[1] = new List<string>(); // Brand 
-        list[2] = new List<string>(); // Description
-        list[3] = new List<string>(); // Available  (0=nietbeschik/1=beschik)
-        list[4] = new List<string>(); // Partid     (0=mainboard; 1=powerboard; 2=tcon; 3=scherm; 4=wifi; 5=afstandsbediening
-        list[5] = new List<string>(); // Price
-        */
+            while (dataReader.Read())
+            {
+                DevicePart dp = new DevicePart();
+                dp.serialnumber = dataReader["sn"].ToString();
+                dp.brand = dataReader["brand"].ToString();
+                dp.description = dataReader["description"].ToString();
+                dp.availability = dataReader["available"].ToString();
+                dp.partid = Convert.ToInt32(dataReader["partid"]); //casten werkt niet
+                dp.price = (float)dataReader["price"];
+                list.Add(dp);
+            }
 
+            dataReader.Close();
+            CloseConnection();
+            return list;
+        }
+        else
+        {
+            return list;
+        }
+    }
+
+    public List<Device> SelectDevice(string devicesn)
+    {
+        string query = "";
+        if (!String.IsNullOrEmpty(devicesn))
+        {
+            query = "SELECT * FROM devices WHERE devices.sn = '" + devicesn + "'";
+        }
+
+        List<Device> list = new List<Device>();
 
         if (OpenConnection() == true)
         {
@@ -89,28 +122,19 @@ public class DatabaseConnector
 
             while (dataReader.Read())
             {
-                /*list[0].Add(dataReader["sn"] + "");
-                list[1].Add(dataReader["brand"] + "");
-                list[2].Add(dataReader["description"] + "");
-                list[3].Add(dataReader["available"] + "");
-                list[4].Add(dataReader["partid"] + "");
-                list[5].Add(dataReader["price"] + "");*/
-
-                DevicePart dp = new DevicePart();
-                dp.serialnumber = dataReader["sn"].ToString();
-                dp.brand = dataReader["brand"].ToString();
-                dp.description = dataReader["description"].ToString();
-                dp.availability = (bool)((int)dataReader["available"]));
-                dp.partid = (int)dataReader["partid"];
-                dp.price = (float)dataReader["price"];
-                list.Add(dp);
-               
+                Device d = new Device();
+                d.serialnumber = dataReader["sn"].ToString();
+                d.brand = dataReader["brand"].ToString();
+                d.description = dataReader["description"].ToString();
+                d.mainboard = dataReader["mainboard"].ToString();
+                d.powerboard = dataReader["powerboard"].ToString();
+                d.tconboard = dataReader["tconboard"].ToString();
+                d.price = (float)dataReader["price"];
+                list.Add(d);
             }
 
             dataReader.Close();
-
             CloseConnection();
-
             return list;
         }
         else
