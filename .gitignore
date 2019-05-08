@@ -6,3 +6,26 @@
 #ignore folder venv
 Python_(Flask-RESTfull)/venv/
 *.iml
+*.config
+*.refresh
+*.exe
+*.dll
+*.xdt
+*.cache
+*.json
+*.cs
+*.rsp
+*.targets
+*.nupkg
+*.props
+*.p7s
+*.lock
+*.ide-wal
+*.ps1
+C#_(SOAP)/SOAP_Server(deviceparts)/.vs/SOAP_Server(deviceparts)/v15/.suo
+*.ide
+*.csproj
+*.sln
+*.ide-shm
+C#_(SOAP)/SoapWebService/.vs/SoapWebService/v15/.suo
+*.md
