@@ -1,0 +1,11 @@
+.container{
+    width: 80%;
+}
+
+.navbar-inverse {
+    background-color: #424953; !important;
+    border-color: #393f47; !important;
+}
+.navbar {
+    border-radius: 1px;
+}
