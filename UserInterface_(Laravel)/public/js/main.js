@@ -18,3 +18,10 @@ function btnModalRecordInfo(sord, devicebrand, devicesn, complaint, clientinfo, 
 
     $('#modalRecordInfo').modal('show');
 }
+
+function btnmodalRecordDeviceParts(devicebrand, devicesn) {
+
+    $('#modalRecordDevicePartsHeader').text("Onderdelenlijst: " + devicebrand  + " (" + devicesn + ")" );
+
+    $('#modalRecordDeviceParts').modal('show');
+}

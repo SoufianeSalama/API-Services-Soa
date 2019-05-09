@@ -45,15 +45,18 @@ class Record(Resource):
         record = []
         record.append(request.form['diagnose'])
         record.append(request.form['statuskey'])
-        record.append(request.form['userid'])
+        #record.append(request.form['userid'])
 
-        mycursor = self.mydb.cursor()
+        #mycursor = self.mydb.cursor()
 
-        sql = "UPDATE records SET diagnose = %s, statuskey = %s, userid = %s WHERE sord = %s"
-        val = (record[0], record[1], record[2], str(num))
-        mycursor.execute(sql, val)
+        #sql = "UPDATE records SET diagnose = %s, statuskey = %s, userid = %s WHERE sord = %s"
+        #val = (record[0], record[1], record[2], str(num))
 
-        self.mydb.commit()
+        #sql = "UPDATE records SET diagnose = %s, statuskey = %s WHERE sord = %s"
+        #val = (record[0], record[1], str(num))
+        #mycursor.execute(sql, val)
+
+        #self.mydb.commit()
 
         return "ok"
 

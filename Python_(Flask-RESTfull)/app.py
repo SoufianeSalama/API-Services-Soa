@@ -20,8 +20,8 @@ api = Api(app)
 # api.add_resource(UpdateDevice, "/api/devices/<int:num>")
 
 # of makkelijker:
-api.add_resource(Record, "/api/records/<int:num>")
-api.add_resource(Records, "/api/records")
+api.add_resource(Record,    "/api/records/<int:num>")
+api.add_resource(Records,   "/api/records")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -45,6 +45,14 @@ class RecordService extends Model
     }
 
 
+    public function updateRecord($iId, $aFormData){
+        $sUrl = $this->sBaseUrl . "records/" . $iId;
+        echo $sUrl;
+        //$sUrl = "https://soufiane.free.beeceptor.com";
+        $this->postDataWithCurl($sUrl, $aFormData);
+    }
+
+
     private function getDataWithCurl($sUrl){
         $curl = curl_init($sUrl);
         /*$curl_post_data =a$aAuthData;*/
@@ -64,6 +72,31 @@ class RecordService extends Model
         // Controleer op errors van curl (http code)
 
         return $curl_response;
+    }
 
+    private function postDataWithCurl($sUrl, $aPostData){
+        $curl = curl_init($sUrl);
+        $curl_post_data = $aPostData;
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        //curl_setopt($curl, CURLOPT_PUT, true);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $curl_post_data);
+        /*curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Accept: application/json',
+            'Content-Type: application/json'
+        ));*/
+
+        $curl_response = curl_exec($curl);
+        // Controleer op errors van curl (http code)
+
+        // also get the error and response code
+        //$errors = curl_error($curl);
+        $response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        //var_dump($errors);
+        var_dump($response);
+
+        return $curl_response;
     }
 }
