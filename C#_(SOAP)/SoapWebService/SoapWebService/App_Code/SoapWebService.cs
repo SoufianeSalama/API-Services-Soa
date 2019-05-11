@@ -42,7 +42,7 @@ public class SoapWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public List<Device> AllPartsOfDevice(string deviceSN)
+    public List<Device> PartsOfDevice(string deviceSN)
     {
         // deze toont de gebruiker de gebruikte onderdelen in een bepaald toestel, zodat ze deze kunnen bestellen
         List<Device> parts = dbconn.SelectDevice(deviceSN); // SN = serienummer
