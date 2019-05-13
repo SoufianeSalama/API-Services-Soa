@@ -63,8 +63,14 @@ class DevicePartsControllerApi extends Controller
                 new PartsOfDevice($sDeviceSN)
             ]);
 
-        print_r($oResponse);
-        //$aPartList = $oResponse->
+        //print_r($oResponse);
+        $aParts = ($oResponse->PartsOfDeviceResult->DevicePart);
+        /*foreach ($aParts as $aPart){
+            print_r($aPart);
+            echo "<br /><br />";
+        }*/
+        echo json_encode($aParts);
+
     }
 
     /**

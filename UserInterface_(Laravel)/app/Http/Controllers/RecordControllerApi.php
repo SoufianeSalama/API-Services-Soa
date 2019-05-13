@@ -16,7 +16,9 @@ class RecordControllerApi extends Controller
     */
     public function index()
     {
-        //
+        $oRecordService = new RecordService();
+        $aData = $oRecordService->getRecords();
+        echo json_encode($aData);
     }
 
     /**

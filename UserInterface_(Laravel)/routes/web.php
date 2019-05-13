@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 Route::get('/','RecordController@index');
 
-
+Route::get('/route', 'RouteController@index');

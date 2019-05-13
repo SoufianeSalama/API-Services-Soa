@@ -8,6 +8,18 @@
     <meta name="author" content="Soufiane Salama">
 
     <title>TV-Repairs @yield('title')</title>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-mapevents.js"
+            type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css"
+          href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
@@ -21,9 +33,9 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">TV-Repairs</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">All Records</a></li>
-        </ul>
+        {{--<ul class="nav navbar-nav">--}}
+            {{--<li class="active"><a href="#">All Records</a></li>--}}
+        {{--</ul>--}}
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
@@ -39,7 +51,6 @@
 
 
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>

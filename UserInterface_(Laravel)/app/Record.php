@@ -19,7 +19,9 @@ class Record
 
     public $sSord;
     public $sDevicesn;
+    public $sBrand;
     public $sClientinfo;
+    public $sClientaddress;
     public $sComplaint;
     public $sDiagnose;
     public $iStatuskey;

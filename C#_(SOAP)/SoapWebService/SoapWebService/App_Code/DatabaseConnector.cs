@@ -142,4 +142,46 @@ public class DatabaseConnector
             return list;
         }
     }
+
+    public List<DevicePart> getParts(string devicesn)
+    {
+        string query = @"SELECT
+                deviceparts.sn AS 'partSN',
+                deviceparts.available,
+                deviceparts.price,
+                deviceparts.description
+            FROM
+                devices
+            INNER JOIN deviceparts
+            ON devices.mainboard = deviceparts.sn
+            OR devices.tconboard = deviceparts.sn
+            OR devices.powerboard = deviceparts.sn
+            WHERE devices.sn = '" + devicesn + "'";
+
+        List<DevicePart> list = new List<DevicePart>();
+
+        if (OpenConnection() == true)
+        {
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                DevicePart dp = new DevicePart();
+                dp.serialnumber = dataReader["partSN"].ToString();
+                dp.description = dataReader["description"].ToString();
+                dp.price = (float)dataReader["price"];
+                dp.availability = dataReader["available"].ToString();
+                list.Add(dp);
+            }
+
+            dataReader.Close();
+            CloseConnection();
+            return list;
+        }
+        else
+        {
+            return list;
+        }
+    }
 }

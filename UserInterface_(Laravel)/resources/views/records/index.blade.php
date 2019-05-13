@@ -34,7 +34,7 @@
                             @foreach ($aRecords as $r)
                                 <tr>
                                     <td> {{$r->sSord}} </td>
-                                    <td>NOG TOEVOEGEN</td>
+                                    <td> {{$r->sBrand}} </td>
                                     <td> {{$r->sDevicesn}} </td>
                                     <td> {{$r->sComplaint}} </td>
                                     <td> {{$r->sClientinfo}} </td>
@@ -57,10 +57,10 @@
                                     <td>
                                         <button type="button" id="btnmodalRecordDeviceParts" class="btn btn-sm btn-primary btn-create btn-showform"
                                                 onclick="btnmodalRecordDeviceParts(
-                                                    'Merk nog Toevoegen aan DB',
+                                                    '{{$r->sBrand}}',
                                                     '{{$r->sDevicesn}}'
                                                 )">
-                                            Meer info
+                                            Onderdelen
                                         </button>
                                     </td>
 
@@ -89,33 +89,33 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label for="text">Merk Toestel:</label>
-                            <input type="text" class="form-control" id="frmRecordDeviceBrand">
+                            <input type="text" class="form-control" id="frmRecordDeviceBrand" readonly>
                         </div>
                         <div class="form-group">
                             <label for="text">SN Toestel:</label>
-                            <input type="text" class="form-control" id="frmRecordDeviceSN">
+                            <input type="text" class="form-control" id="frmRecordDeviceSN" readonly>
                         </div>
                         <div class="form-group">
                             <label for="frmRecordComplaint">Klacht:</label>
-                            <textarea class="form-control" id="frmRecordComplaint"></textarea>
+                            <textarea class="form-control" id="frmRecordComplaint" readonly></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="frmRecordClientInfo">Klant info:</label>
-                            <textarea class="form-control" id="frmRecordClientInfo"></textarea>
+                            <textarea class="form-control" id="frmRecordClientInfo" readonly></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="frmRecordDiagnose">Diagnose:</label>
-                            <textarea class="form-control" id="frmRecordDiagnose"></textarea>
+                            <textarea class="form-control" id="frmRecordDiagnose" readonly></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Status:</label>
-                            <select class="form-control" id="frmRecordStatus">
+                            <select class="form-control" id="frmRecordStatus" readonly>
                                 <option value="1">Toestel moet opgehaald worden bij de klant.</option>
                                 <option value="2">Toestel staat klaar voor controle.</option>
                                 <option value="3">Toestel is gecontroleerd, wachten op onderdeel.</option>
@@ -155,7 +155,7 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="loader"></div>
+                        <div class="loader" id="loader" style="margin: auto;"></div>
 
                         <div class="table-responsive">
                             <table class="table table-striped custab" id="devicePartsTable">

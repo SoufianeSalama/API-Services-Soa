@@ -16,7 +16,9 @@ class RecordService extends Model
             $oRecord = new Record();
             $oRecord->sSord = $aR->sord;
             $oRecord->sDevicesn = $aR->devicesn;
+            $oRecord->sBrand = $aR->brand;
             $oRecord->sClientinfo = $aR->clientinfo ;
+            $oRecord->sClientaddress= $aR->clientaddress ;
             $oRecord->sComplaint = $aR->complaint;
             $oRecord->sDiagnose = $aR->diagnose;
             $oRecord->iStatuskey = $aR->statuskey;

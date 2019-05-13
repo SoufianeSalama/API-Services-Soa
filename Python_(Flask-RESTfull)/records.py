@@ -22,11 +22,13 @@ class Record(Resource):
         recordJSON = {
             "sord": record[0],
             "devicesn": record[1],
-            "clientinfo": record[2],
-            "complaint": record[3],
-            "diagnose": record[4],
-            "statuskey": record[5],
-            "userid": record[6]
+            "brand": record [2],
+            "clientinfo": record[3],
+            "clientaddress": record[4],
+            "complaint": record[5],
+            "diagnose": record[6],
+            "statuskey": record[7],
+            "userid": record[8]
         };
         returnData = []
         returnData.append(recordJSON)
@@ -80,11 +82,13 @@ class Records(Resource):
             deviceJSON = {
                 "sord": record[0],
                 "devicesn": record[1],
-                "clientinfo": record[2],
-                "complaint": record[3],
-                "diagnose" : record[4],
-                "statuskey": record[5],
-                "userid": record[6]
+                "brand": record [2],
+                "clientinfo": record[3],
+                "clientaddress": record[4],
+                "complaint": record[5],
+                "diagnose": record[6],
+                "statuskey": record[7],
+                "userid": record[8]
             };
             returnData.append(deviceJSON)
         return returnData
