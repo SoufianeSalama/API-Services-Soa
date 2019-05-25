@@ -17,6 +17,8 @@ function btnModalRecordInfo(sord, devicebrand, devicesn, complaint, clientinfo, 
     $('#frmRecordClientInfo').val(clientinfo);
     $('#frmRecordDiagnose').val(diagnose);
     $('#frmRecordStatus').val(statuskey);
+    $('#frmRecordSord').val(sord);
+
 
     $('#modalRecordInfo').modal('show');
 }
@@ -30,7 +32,7 @@ function btnmodalRecordDeviceParts(devicebrand, devicesn) {
 
     if (flag==0){
         flag = 1;
-        var ApiURL = "/api/getDeviceParts/" + devicesn;
+        var ApiURL = "/api/deviceParts/" + devicesn;
         $.get(ApiURL, function(data, status){
             var parts = jQuery.parseJSON(data);
             $("#loader").css("display", "none");
@@ -45,9 +47,43 @@ function btnmodalRecordDeviceParts(devicebrand, devicesn) {
             })
 
         }).fail(function() {
-            $("#loader").style("display", "none");
+            $("#loader").css("display", "none");
             alert('Verbindings problemen met de server');
         });
 
     }
+}
+
+function btnActivateForm() {
+    // Remove 'readonly' attribute of some inputs
+    /*frmRecordDeviceBrand
+    frmRecordDeviceSN
+    frmRecordComplaint
+    frmRecordClientInfo
+    frmRecordDiagnose
+    frmRecordStatus*/
+
+    $("#btnFormOpslaan").css("display", "block");
+    $("#frmRecordDiagnose").attr("readonly", false);
+    $("#frmRecordStatus").attr("readonly", false);
+}
+
+function btnSendForm(){
+    var sord = $("#frmRecordSord").val();
+    var diagnose  = $("#frmRecordDiagnose").val();
+    var recordstatus  = $("#frmRecordStatus").val();
+    var ApiURL = "/api/records/" + sord;
+
+    sendData = {
+        "frmRecordDiagnose": diagnose,
+        "frmRecordStatuskey": recordstatus
+    };
+    $.ajax({
+        url: ApiURL,
+        type: 'PUT',
+        data:  sendData,
+        success: function () {
+            alert("data succesfull updated");
+        }
+    });
 }

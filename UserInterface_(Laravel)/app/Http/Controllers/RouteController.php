@@ -13,7 +13,6 @@ class RouteController extends Controller
      */
     public function index()
     {
-
         return view('route.index');
     }
 }

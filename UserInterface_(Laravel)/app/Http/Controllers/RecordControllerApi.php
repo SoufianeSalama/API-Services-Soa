@@ -78,9 +78,12 @@ class RecordControllerApi extends Controller
             "statuskey" => $request->input('frmRecordStatuskey')
         );
         $oRecordService = new RecordService();
-        $oRecordService->updateRecord($id, $aFormData);
-        return "ok";
+        $bResult = $oRecordService->updateRecord($id, $aFormData);
 
+        if ($bResult)
+            return "ok";
+        else
+            return "nok";
     }
 
     /**

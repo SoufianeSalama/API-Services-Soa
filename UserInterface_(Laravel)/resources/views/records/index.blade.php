@@ -88,50 +88,60 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <input type="hidden" class="form-control" id="frmRecordSord">
 
                         <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="form-group">
-                            <label for="text">Merk Toestel:</label>
-                            <input type="text" class="form-control" id="frmRecordDeviceBrand" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="text">SN Toestel:</label>
-                            <input type="text" class="form-control" id="frmRecordDeviceSN" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="frmRecordComplaint">Klacht:</label>
-                            <textarea class="form-control" id="frmRecordComplaint" readonly></textarea>
-                        </div>
+                            <div class="form-group">
+                                <label for="text">Merk Toestel:</label>
+                                <input type="text" class="form-control" id="frmRecordDeviceBrand" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="text">SN Toestel:</label>
+                                <input type="text" class="form-control" id="frmRecordDeviceSN" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="frmRecordComplaint">Klacht:</label>
+                                <textarea class="form-control" id="frmRecordComplaint" readonly></textarea>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="frmRecordClientInfo">Klant info:</label>
-                            <textarea class="form-control" id="frmRecordClientInfo" readonly></textarea>
+                            <div class="form-group">
+                                <label for="frmRecordClientInfo">Klant info:</label>
+                                <textarea class="form-control" id="frmRecordClientInfo" readonly></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="frmRecordDiagnose">Diagnose:</label>
+                                <textarea class="form-control" id="frmRecordDiagnose" readonly></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Status:</label>
+                                <select class="form-control" id="frmRecordStatus" readonly>
+                                    <option value="1">Toestel moet opgehaald worden bij de klant.</option>
+                                    <option value="2">Toestel staat klaar voor controle.</option>
+                                    <option value="3">Toestel is gecontroleerd, wachten op onderdeel.</option>
+                                    <option value="4">Toestel is hersteld, moet verstuurd worden naar klant.</option>
+                                    <option value="5">Status onbekend.</option>
+                                </select>
+                            </div>
+
+
+
                         </div>
-
-                        <div class="form-group">
-                            <label for="frmRecordDiagnose">Diagnose:</label>
-                            <textarea class="form-control" id="frmRecordDiagnose" readonly></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Status:</label>
-                            <select class="form-control" id="frmRecordStatus" readonly>
-                                <option value="1">Toestel moet opgehaald worden bij de klant.</option>
-                                <option value="2">Toestel staat klaar voor controle.</option>
-                                <option value="3">Toestel is gecontroleerd, wachten op onderdeel.</option>
-                                <option value="4">Toestel is hersteld, moet verstuurd worden naar klant.</option>
-                                <option value="5">Status onbekend.</option>
-                            </select>
-                        </div>
-
-
-                        </div>
-
-                        <!--<div class="col-sm-6 col-md-6 col-lg-6">
-                            <h4>Toestel onderdelen</h4>
-                        </div>-->
 
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                <button type="button" class="btn btn-lg btn-basic btn-block" onclick="btnActivateForm()" >Wijzigen</button>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6" id="btnFormOpslaan" style="display: none;">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-success btn-block"onclick="btnSendForm()">Opslaan</button>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

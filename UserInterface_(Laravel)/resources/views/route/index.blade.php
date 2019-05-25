@@ -38,10 +38,10 @@
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         var objRoutingParameters={};
         getRecords();
-
+        var records;
         function getRecords(){
-            var apiURL = "/api/getRecords/";
-            var records;
+            var apiURL = "/api/records/";
+
             $.get(apiURL, function(data, status){
                 records = jQuery.parseJSON(data);
 
@@ -56,7 +56,7 @@
                     value = "geo!" + records[i-1]["sClientaddress"];
                     objRoutingParameters[index] = value;
                 }
-                index = "waypoint" + (i+1);
+                index = "waypoint" + (i);
                 objRoutingParameters[index] = coordStartEindpunt;
                 objRoutingParameters["representation"] = "display";
                 console.log(objRoutingParameters);
@@ -71,6 +71,7 @@
                     function(error) {
                         alert(error.message);
                     });
+
 
             }).fail(function() {
                 records = {};
@@ -105,11 +106,28 @@
                 endPoint = route.waypoint[1].mappedPosition;
 
                 // Create a polyline to display the route:
-                var routeLine = new H.map.Polyline(linestring, {
-                    style: { strokeColor: 'blue', lineWidth: 10 }
+                routeLine = new H.map.Polyline(linestring, {
+                    style: { lineWidth: 10 },
+                    arrows: { fillColor: 'white', frequency: 2, width: 0.8, length: 0.7 }
                 });
 
-                // Create a marker for the start point:
+                var markerList=[];
+                var startAddressIcon = new H.map.Icon('img/UHasselt_logo.png', {size: {w: 50, h: 35}});
+                markerList.push(new H.map.Marker({
+                    lat: '50.925823',
+                    lng: '5.392200'
+                }, { icon: startAddressIcon }));
+
+                for(i=0;i<records.length;i++){
+                    var coordinaten = records[i]["sClientaddress"].split(',');
+                    console.log(coordinaten);
+                    markerList.push(new H.map.Marker({
+                        lat: coordinaten[0],
+                        lng: coordinaten[1]
+                    }));
+                }
+
+                /*// Create a marker for the start point:
                 var startMarker = new H.map.Marker({
                     lat: startPoint.latitude,
                     lng: startPoint.longitude
@@ -119,17 +137,40 @@
                 var endMarker = new H.map.Marker({
                     lat: endPoint.latitude,
                     lng: endPoint.longitude
-                });
+                });*/
 
                 // Add the route polyline and the two markers to the map:
-                map.addObjects([routeLine, startMarker, endMarker]);
+                markerList.push(routeLine);
+                //console.log(markerList);
+                //map.addObjects([startMarker, endMarker, routeLine ]);
+                map.addObjects(markerList);
 
                 // Set the map's viewport to make the whole route visible:
                 map.setViewBounds(routeLine.getBounds());
+                getLocation();
             }
         };
 
+        function getLocation(){
+            //https://www.w3schools.com/html/html5_geolocation.asp
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPositionoOnMap);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
 
+        function showPositionoOnMap(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+
+            var driverIcon = new H.map.Icon('img/UHasselt_logo.png', {size: {w: 50, h: 35}});
+            var driverMarker = new H.map.Marker({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }, { icon: driverIcon });
+            map.addObjects(driverMarker);
+        }
 
 
 
