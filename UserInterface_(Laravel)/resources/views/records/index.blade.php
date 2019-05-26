@@ -79,7 +79,6 @@
     <!-- Modal: Record Meer info/wijzigen -->
     <div id="modalRecordInfo" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -124,11 +123,7 @@
                                     <option value="5">Status onbekend.</option>
                                 </select>
                             </div>
-
-
-
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
@@ -140,8 +135,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -151,6 +144,68 @@
         </div>
     </div>
 
+    <!-- Modal: Nieuws Record -->
+    <div id="modalNewRecord" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Nieuw dossier toevoegen</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" class="form-control" id="frmRecordSord">
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group">
+                                <label for="text">Merk Toestel:</label>
+                                <input type="text" class="form-control" id="frmNewRecordDeviceBrand" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="text">SN Toestel:</label>
+                                <input type="text" class="form-control" id="frmNewRecordDeviceSN" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="frmRecordComplaint">Klacht:</label>
+                                <textarea class="form-control" id="frmNewRecordComplaint" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="frmRecordClientInfo">Klant info:</label>
+                                <textarea class="form-control" id="frmNewRecordClientInfo" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="frmRecordClientInfo">Klant adres (Coordinaten):</label>
+                                <input type="text" class="form-control" id="frmNewRecordClientAddress" required placeholder="lat,lon">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Status:</label>
+                                <select class="form-control" id="frmNewRecordStatus" required>
+                                    <option value="1" selected>Toestel moet opgehaald worden bij de klant.</option>
+                                    <option value="2">Toestel staat klaar voor controle.</option>
+                                    <option value="5">Status onbekend.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12" >
+                            <div class="form-group">
+                                <button type="button" class="btn btn-lg btn-success btn-block"onclick="btnSendNewRecordForm()">Opslaan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: Toestel onderdelen opvragen -->
     <div id="modalRecordDeviceParts" class="modal fade" role="dialog">

@@ -97,8 +97,10 @@ class Records(Resource):
         # Create a new device (POST)
         record = [];
         #record.append(request.form['sord'])
+        record.append(request.form['brand'])
         record.append(request.form['devicesn'])
         record.append(request.form['clientinfo'])
+        record.append(request.form['clientaddress'])
         record.append(request.form['complaint'])
         record.append(request.form['diagnose'])
         record.append(request.form['statuskey'])
@@ -108,9 +110,9 @@ class Records(Resource):
         ### id is hetzelfde als een dossiernummer, serienummer is uniek voor elk toestel (staat op een artiekelticket
         ### controle op SQL injectie
 
-        sql = "INSERT INTO records (devicesn, clientinfo, complaint, diagnose, statuskey, userid) " \
-              "VALUES (%s, %s, %s, %s,%s, %s)"
-        val = (record[0], record[1], record[2], record[3], record[4], record[5])
+        sql = "INSERT INTO records (brand, devicesn, clientinfo, clientaddress, complaint, diagnose, statuskey, userid) " \
+              "VALUES (%s, %s, %s, %s,%s, %s, %s, %s)"
+        val = (record[0], record[1], record[2], record[3], record[4], record[5], record[6], record[7])
         mycursor = self.mydb.cursor()
         mycursor.execute(sql, val)
 

@@ -83,7 +83,40 @@ function btnSendForm(){
         type: 'PUT',
         data:  sendData,
         success: function () {
-            alert("data succesfull updated");
+            alert("Record succesvol aangepast");
+        }
+    });
+}
+
+function btnSendNewRecordForm(){
+    var brand  = $("#frmNewRecordDeviceBrand").val();
+    var devicesn  = $("#frmNewRecordDeviceSN").val();
+    var complaint  = $("#frmNewRecordComplaint").val();
+    var clientinfo  = $("#frmNewRecordClientInfo").val();
+    var clientaddress  = $("#frmNewRecordClientAddress").val();
+    var statuskey  = $("#frmNewRecordStatus").val();
+
+    var ApiURL = "/api/records/";
+    //var ApiURL = "http://salama.free.beeceptor.com";
+
+    sendData = {
+        "frmNewRecordDeviceBrand": brand,
+        "frmNewRecordDeviceSN" : devicesn,
+        "frmNewRecordComplaint" : complaint,
+        "frmNewRecordClientInfo": clientinfo,
+        "frmNewRecordClientAddress": clientaddress,
+        "frmNewRecordStatus" : statuskey
+    };
+    $.ajax({
+        url: ApiURL,
+        type: 'POST',
+        data:  sendData,
+        success: function () {
+            alert("Record succesvol toegevoegd");
+            $('#modalNewRecord').modal('hide');
+        },
+        error: function(){
+            alert('Verbindingsproblemen met server \n Probeer later opnieuw');
         }
     });
 }

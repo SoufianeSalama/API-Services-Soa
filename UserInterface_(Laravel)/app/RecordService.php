@@ -52,6 +52,15 @@ class RecordService extends Model
         echo $sUrl;
         print_r($aFormData);
         //$sUrl = "https://soufiane.free.beeceptor.com";
+        if ($this->putDataWithCurl($sUrl, $aFormData) != 200){
+            // als de curl operatie geen HTTP code 200 krijgt is er iets misgelopen
+            return false;
+        };
+        return true;
+    }
+
+    public function newRecord($aFormData){
+        $sUrl = $this->sBaseUrl . "records";
         if ($this->postDataWithCurl($sUrl, $aFormData) != 200){
             // als de curl operatie geen HTTP code 200 krijgt is er iets misgelopen
             return false;
@@ -81,7 +90,7 @@ class RecordService extends Model
         return $curl_response;
     }
 
-    private function postDataWithCurl($sUrl, $aPostData){
+    private function putDataWithCurl($sUrl, $aPostData){
         $curl = curl_init($sUrl);
         //$curl = curl_init("salama.free.beeceptor.com");
         $curl_post_data = $aPostData;
@@ -101,4 +110,26 @@ class RecordService extends Model
 
         return $response;
     }
+
+    private function postDataWithCurl($sUrl, $aPostData){
+        $curl = curl_init($sUrl);
+        //$curl = curl_init("salama.free.beeceptor.com");
+        $curl_post_data = $aPostData;
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($curl_post_data));
+
+        $curl_response = curl_exec($curl);
+        // Controleer op errors van curl (http code)
+
+        // also get the error and response code
+        //$errors = curl_error($curl);
+        $response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        //print_r($errors);
+        print_r($response);
+
+        return $response;
+    }
+
 }

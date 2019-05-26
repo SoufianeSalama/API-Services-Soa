@@ -39,7 +39,24 @@ class RecordControllerApi extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $aFormData = array(
+            "diagnose"  => "/",
+            "statuskey" => $request->input('frmNewRecordStatus'),
+            "brand"     => $request->input('frmNewRecordDeviceBrand'),
+            "devicesn"  => $request->input('frmNewRecordDeviceSN'),
+            "complaint" => $request->input('frmNewRecordComplaint'),
+            "clientinfo"    => $request->input('frmNewRecordClientInfo'),
+            "clientaddress" => $request->input('frmNewRecordClientAddress'),
+            "userid" => 1
+        );
+
+        $oRecordService = new RecordService();
+        $bResult = $oRecordService->newRecord($aFormData);
+
+        if ($bResult)
+            return "ok";
+        else
+            return "nok";
     }
 
     /**
