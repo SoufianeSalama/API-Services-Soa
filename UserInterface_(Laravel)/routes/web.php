@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });*/
 
-Route::get('/','RecordController@index');
+Route::get('/','RecordController@index')->name('records');
 
 Route::get('/route', 'RouteController@index');
+
+Auth::routes();
+
+//Route::get('/', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

@@ -15,6 +15,9 @@
                     </div>
                 </div>
                 <div class="panel-body">
+                    <div class="form-group">
+                        <input type="text" id="searchInput" class="form-control" onkeyup="searchInputFunction()" placeholder="Zoek naar dossiers...">
+                    </div>
 
                     <div class="table-responsive">
                         <table class="table table-striped custab" id="recordsTable">

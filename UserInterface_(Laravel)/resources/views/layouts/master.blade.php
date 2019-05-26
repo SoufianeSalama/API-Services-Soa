@@ -33,14 +33,38 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">TV-Repairs</a>
         </div>
-        {{--<ul class="nav navbar-nav">--}}
-            {{--<li class="active"><a href="#">All Records</a></li>--}}
-        {{--</ul>--}}
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </li>
         </ul>
+        </div>
     </div>
 </nav>
+
 
 <div class="container">
     @yield('inhoud')
