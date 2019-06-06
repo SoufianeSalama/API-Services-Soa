@@ -1,6 +1,11 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_restful_swagger import swagger
+
 import mysql.connector
+
+app = Flask(__name__)
+api = swagger.docs(Api(app), apiVersion='0.1')
 
 class Record(Resource):
     mydb = ""
@@ -11,10 +16,26 @@ class Record(Resource):
             passwd="",
             database="soa_project"
         )
-    def get(self, num):
+    "Record API"
+    @swagger.operation(
+        notes='Get a record by SORD',
+        nickname='get',
+        # Parameters can be automatically extracted from URLs (e.g. <string:id>)
+        # but you could also override them here, or add other parameters.
+        parameters=[
+        {
+            "name": "sord",
+            "description": "The SORD of the record",
+            "required": True,
+            "allowMultiple": False,
+            "dataType": 'string',
+            "paramType": "path"
+        }
+    ])
+    def get(self, sord):
         # Get a device with id (GET)
         mycursor = self.mydb.cursor()
-        sql = "SELECT * FROM records WHERE sord=" + str(num)
+        sql = "SELECT * FROM records WHERE sord=" + str(sord)
         mycursor.execute(sql)
 
         record = mycursor.fetchall()[0]
@@ -34,14 +55,44 @@ class Record(Resource):
         returnData.append(recordJSON)
         return returnData
 
-    def delete(self,num):
+    @swagger.operation(
+        notes='Delete a record by SORD',
+        nickname='delete',
+        # Parameters can be automatically extracted from URLs (e.g. <string:id>)
+        # but you could also override them here, or add other parameters.
+        parameters=[
+            {
+                "name": "sord",
+                "description": "The SORD of the record",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            }
+        ])
+    def delete(self,sord):
         # Delete a record (DELETE)
         mycursor = self.mydb.cursor()
-        sql = "DELETE FROM records WHERE sord = " + str(num)
+        sql = "DELETE FROM records WHERE sord = " + str(sord)
         mycursor.execute(sql)
         self.mydb.commit()
         return "ok"
 
+    @swagger.operation(
+        notes='Update a record by SORD',
+        nickname='put',
+        # Parameters can be automatically extracted from URLs (e.g. <string:id>)
+        # but you could also override them here, or add other parameters.
+        parameters=[
+            {
+                "name": "sord",
+                "description": "The SORD of the record",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            }
+        ])
     def put(self, num):
         # Update a device (UPDATE)
         record = []
@@ -71,6 +122,11 @@ class Records(Resource):
             passwd="",
             database="soa_project"
         )
+
+    @swagger.operation(
+        notes='Get all records',
+        nickname='get',
+        )
     def get(self):
         mycursor = self.mydb.cursor()
         mycursor.execute("SELECT * FROM records")
@@ -92,7 +148,78 @@ class Records(Resource):
             returnData.append(deviceJSON)
         return returnData
 
+    @swagger.operation(
+        notes='Create a new record',
+        nickname='put',
+        # Parameters can be automatically extracted from URLs (e.g. <string:id>)
+        # but you could also override them here, or add other parameters.
+        parameters=[
+            {
+                "name": "brand",
+                "description": "The BRAND of the device",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "devicesn",
+                "description": "The DEVICE SERIALNUMBER of the device",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "clientinfo",
+                "description": "The CLEINT INFO",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "clientaddress",
+                "description": "The CLIENT ADDRESS",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "complaint",
+                "description": "The COMPLAINT of the device",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "diagnose",
+                "description": "The DIAGNOSE of the manufacturer",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "statuskey",
+                "description": "The STATUS KEY of the device",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            },
+            {
+                "name": "userid",
+                "description": "The USER ID of the manufacturer",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "path"
+            }
 
+        ])
     def post(self):
         # Create a new device (POST)
         record = [];
@@ -118,5 +245,3 @@ class Records(Resource):
 
         self.mydb.commit()
         return "ok"
-
-
