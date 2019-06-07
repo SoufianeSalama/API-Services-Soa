@@ -12,41 +12,85 @@ class RecordService extends Model
         $sUrl = $this->sBaseUrl . "records";
         $aRecords = json_decode($this->getDataWithCurl($sUrl));
         $oRecordList = [];
-        foreach ($aRecords as $aR){
-            $oRecord = new Record();
-            $oRecord->sSord = $aR->sord;
-            $oRecord->sDevicesn = $aR->devicesn;
-            $oRecord->sBrand = $aR->brand;
-            $oRecord->sClientinfo = $aR->clientinfo ;
-            $oRecord->sClientaddress= $aR->clientaddress ;
-            $oRecord->sComplaint = $aR->complaint;
-            $oRecord->sDiagnose = $aR->diagnose;
-            $oRecord->iStatuskey = $aR->statuskey;
-            switch ($aR->statuskey){
-                case 1:
-                    $oRecord->sStatusDescription = "Toestel moet opgehaald worden bij de klant.";
-                    break;
-                case 2:
-                    $oRecord->sStatusDescription = "Toestel staat klaar voor controle.";
-                    break;
-                case 3:
-                    $oRecord->sStatusDescription = "Toestel is gecontroleerd, wachten op onderdeel.";
-                    break;
-                case 4:
-                    $oRecord->sStatusDescription = "Toestel is hersteld, moet verstuurd worden naar klant.";
-                    break;
-                default:
-                    $oRecord->sStatusDescription = "Status onbekend.";
-                    break;
+        if (!empty($aRecords)){
 
+            foreach ($aRecords as $aR){
+                $oRecord = new Record();
+                $oRecord->sSord = $aR->sord;
+                $oRecord->sDevicesn = $aR->devicesn;
+                $oRecord->sBrand = $aR->brand;
+                $oRecord->sClientinfo = $aR->clientinfo ;
+                $oRecord->sClientaddress= $aR->clientaddress ;
+                $oRecord->sComplaint = $aR->complaint;
+                $oRecord->sDiagnose = $aR->diagnose;
+                $oRecord->iStatuskey = $aR->statuskey;
+                switch ($aR->statuskey){
+                    case 1:
+                        $oRecord->sStatusDescription = "Toestel moet opgehaald worden bij de klant.";
+                        break;
+                    case 2:
+                        $oRecord->sStatusDescription = "Toestel staat klaar voor controle.";
+                        break;
+                    case 3:
+                        $oRecord->sStatusDescription = "Toestel is gecontroleerd, wachten op onderdeel.";
+                        break;
+                    case 4:
+                        $oRecord->sStatusDescription = "Toestel is hersteld, moet verstuurd worden naar klant.";
+                        break;
+                    default:
+                        $oRecord->sStatusDescription = "Status onbekend.";
+                        break;
+
+                }
+                $oRecord->iUserid = $aR->userid;
+                array_push($oRecordList, $oRecord);
             }
-            $oRecord->iUserid = $aR->userid;
-            array_push($oRecordList, $oRecord);
         }
+
         return $oRecordList;
     }
 
+    public function getRecord($iId){
+        $sUrl = $this->sBaseUrl . "records/" . $iId;
+        $aRecords = json_decode($this->getDataWithCurl($sUrl));
+        $oRecordList = [];
+        if (!empty($aRecords)){
 
+            foreach ($aRecords as $aR){
+                $oRecord = new Record();
+                $oRecord->sSord = $aR->sord;
+                $oRecord->sDevicesn = $aR->devicesn;
+                $oRecord->sBrand = $aR->brand;
+                $oRecord->sClientinfo = $aR->clientinfo ;
+                $oRecord->sClientaddress= $aR->clientaddress ;
+                $oRecord->sComplaint = $aR->complaint;
+                $oRecord->sDiagnose = $aR->diagnose;
+                $oRecord->iStatuskey = $aR->statuskey;
+                switch ($aR->statuskey){
+                    case 1:
+                        $oRecord->sStatusDescription = "Toestel moet opgehaald worden bij de klant.";
+                        break;
+                    case 2:
+                        $oRecord->sStatusDescription = "Toestel staat klaar voor controle.";
+                        break;
+                    case 3:
+                        $oRecord->sStatusDescription = "Toestel is gecontroleerd, wachten op onderdeel.";
+                        break;
+                    case 4:
+                        $oRecord->sStatusDescription = "Toestel is hersteld, moet verstuurd worden naar klant.";
+                        break;
+                    default:
+                        $oRecord->sStatusDescription = "Status onbekend.";
+                        break;
+
+                }
+                $oRecord->iUserid = $aR->userid;
+                array_push($oRecordList, $oRecord);
+            }
+        }
+
+        return $oRecordList;
+    }
     public function updateRecord($iId, $aFormData){
         $sUrl = $this->sBaseUrl . "records/" . $iId;
         echo $sUrl;

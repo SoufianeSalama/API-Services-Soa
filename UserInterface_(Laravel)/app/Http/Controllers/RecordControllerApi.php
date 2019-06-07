@@ -8,12 +8,7 @@ use App\RecordService;
 
 class RecordControllerApi extends Controller
 {
-    /*
-    **
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+
     public function index()
     {
         $oRecordService = new RecordService();
@@ -67,7 +62,9 @@ class RecordControllerApi extends Controller
      */
     public function show($id)
     {
-        //
+        $oRecordService = new RecordService();
+        $aData = $oRecordService->getRecord($id);
+        echo json_encode($aData);
     }
 
     /**
