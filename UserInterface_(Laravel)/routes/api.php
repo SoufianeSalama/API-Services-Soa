@@ -24,5 +24,11 @@ Route::resource('updateRecord', 'RecordControllerApi');
 Route::resource('getDeviceParts', 'DevicePartsControllerApi');
 */
 // is hetzelfde als
-Route::resource('records', 'RecordControllerApi');
+
+//Route::resource('records', 'RecordControllerApi');
+Route::post('login', 'RecordControllerApi@login');
 Route::resource('deviceParts', 'DevicePartsControllerApi');
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::resource('records', 'RecordControllerApi');
+});
