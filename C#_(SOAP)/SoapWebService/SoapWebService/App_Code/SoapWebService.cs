@@ -7,7 +7,7 @@ using System.Web.Services;
 /// <summary>
 /// Summary description for SoapWebService
 /// </summary>
-[WebService(Namespace = "http://homepi.ga/")]
+[WebService(Namespace = "http://soacloud-soapwebservice.us-east-1.elasticbeanstalk.com/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
 // [System.Web.Script.Services.ScriptService]

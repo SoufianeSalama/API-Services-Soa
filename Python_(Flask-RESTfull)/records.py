@@ -4,16 +4,16 @@ from flask_restful_swagger import swagger
 
 import mysql.connector
 
-app = Flask(__name__)
+app = application  = Flask(__name__)
 api = swagger.docs(Api(app), apiVersion='0.1')
 
 class Record(Resource):
     mydb = ""
     def __init__(self):
         self.mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="",
+            host="soacl-database.cjn6wctbjclb.us-east-1.rds.amazonaws.com",
+            user="administrator",
+            passwd="fLrsZEBnnc4QD35",
             database="soa_project"
         )
     "Record API"
@@ -29,7 +29,7 @@ class Record(Resource):
             "required": True,
             "allowMultiple": False,
             "dataType": 'string',
-            "paramType": "path"
+            "paramType": 'path'
         }
     ])
     def get(self, sord):
@@ -38,21 +38,25 @@ class Record(Resource):
         sql = "SELECT * FROM records WHERE sord=" + str(sord)
         mycursor.execute(sql)
 
-        record = mycursor.fetchall()[0]
-        print(record)
-        recordJSON = {
-            "sord": record[0],
-            "devicesn": record[1],
-            "brand": record [2],
-            "clientinfo": record[3],
-            "clientaddress": record[4],
-            "complaint": record[5],
-            "diagnose": record[6],
-            "statuskey": record[7],
-            "userid": record[8]
-        };
-        returnData = []
-        returnData.append(recordJSON)
+        records = mycursor.fetchall()
+        if records:
+            record = records[0]
+            recordJSON = {
+                "sord": record[0],
+                "devicesn": record[1],
+                "brand": record [2],
+                "clientinfo": record[3],
+                "clientaddress": record[4],
+                "complaint": record[5],
+                "diagnose": record[6],
+                "statuskey": record[7],
+                "userid": record[8]
+            };
+            returnData = []
+            returnData.append(recordJSON)
+        else:
+            returnData = []
+
         return returnData
 
     @swagger.operation(
@@ -91,23 +95,35 @@ class Record(Resource):
                 "allowMultiple": False,
                 "dataType": 'string',
                 "paramType": "path"
+            },
+            {
+                "name": "diagnose",
+                "description": "The DIAGNOSE of the manufacturer",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'string',
+                "paramType": "form"
+            },
+            {
+                "name": "statuskey",
+                "description": "The STATUS KEY of the device",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": 'int',
+                "paramType": "form"
             }
         ])
-    def put(self, num):
+    def put(self, sord):
         # Update a device (UPDATE)
         record = []
         record.append(request.form['diagnose'])
         record.append(request.form['statuskey'])
         #record.append(request.form['userid'])
-
         mycursor = self.mydb.cursor()
-
         sql = "UPDATE records SET diagnose = %s, statuskey = %s WHERE sord = %s"
-        val = (record[0], record[1], str(num))
+        val = (record[0], record[1], str(sord))
         mycursor.execute(sql, val)
-
         self.mydb.commit()
-
         return "ok"
 
 
@@ -117,9 +133,9 @@ class Records(Resource):
     mydb = ""
     def __init__(self):
         self.mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="",
+            host="soacl-database.cjn6wctbjclb.us-east-1.rds.amazonaws.com",
+            user="administrator",
+            passwd="fLrsZEBnnc4QD35",
             database="soa_project"
         )
 
@@ -133,19 +149,21 @@ class Records(Resource):
 
         records = mycursor.fetchall()
         returnData = []
-        for record in records:
-            deviceJSON = {
-                "sord": record[0],
-                "devicesn": record[1],
-                "brand": record [2],
-                "clientinfo": record[3],
-                "clientaddress": record[4],
-                "complaint": record[5],
-                "diagnose": record[6],
-                "statuskey": record[7],
-                "userid": record[8]
-            };
-            returnData.append(deviceJSON)
+        if records:
+            for record in records:
+                deviceJSON = {
+                    "sord": record[0],
+                    "devicesn": record[1],
+                    "brand": record[2],
+                    "clientinfo": record[3],
+                    "clientaddress": record[4],
+                    "complaint": record[5],
+                    "diagnose": record[6],
+                    "statuskey": record[7],
+                    "userid": record[8]
+                };
+                returnData.append(deviceJSON)
+
         return returnData
 
     @swagger.operation(
@@ -160,7 +178,7 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "devicesn",
@@ -168,7 +186,7 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "clientinfo",
@@ -176,7 +194,7 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "clientaddress",
@@ -184,7 +202,7 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "complaint",
@@ -192,7 +210,7 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "diagnose",
@@ -200,23 +218,23 @@ class Records(Resource):
                 "required": True,
                 "allowMultiple": False,
                 "dataType": 'string',
-                "paramType": "path"
+                "paramType": "form"
             },
             {
                 "name": "statuskey",
                 "description": "The STATUS KEY of the device",
                 "required": True,
                 "allowMultiple": False,
-                "dataType": 'string',
-                "paramType": "path"
+                "dataType": 'int',
+                "paramType": "form"
             },
             {
                 "name": "userid",
                 "description": "The USER ID of the manufacturer",
                 "required": True,
                 "allowMultiple": False,
-                "dataType": 'string',
-                "paramType": "path"
+                "dataType": 'int',
+                "paramType": "form"
             }
 
         ])
@@ -238,10 +256,11 @@ class Records(Resource):
         ### controle op SQL injectie
 
         sql = "INSERT INTO records (brand, devicesn, clientinfo, clientaddress, complaint, diagnose, statuskey, userid) " \
-              "VALUES (%s, %s, %s, %s,%s, %s, %s, %s)"
+              "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
         val = (record[0], record[1], record[2], record[3], record[4], record[5], record[6], record[7])
         mycursor = self.mydb.cursor()
         mycursor.execute(sql, val)
 
         self.mydb.commit()
+
         return "ok"

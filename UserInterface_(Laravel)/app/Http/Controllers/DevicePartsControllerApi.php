@@ -8,42 +8,12 @@ use Artisaninweb\SoapWrapper\SoapWrapper;
 
 class DevicePartsControllerApi extends Controller
 {
-    /*
-    **
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
-    public function index()
-    {
-        //
-    }
-
+    protected $sBaseUrlAWS = "http://soacloud-soapwebservice.us-east-1.elasticbeanstalk.com/SoapWebService.asmx?WSDL";
+    protected $sBaseUrlLocal = "http://localhost:.../SoapWebService.asmx?WSDL";
     /**
-     * Show the form for creating a new resource.
+     * De onderdelen van een toestel ophalen via SOAP
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
+     * @param  int  $sDeviceSN
      * @return \Illuminate\Http\Response
      */
     public function show($sDeviceSN)
@@ -51,7 +21,7 @@ class DevicePartsControllerApi extends Controller
         $oSoapWrapper = new SoapWrapper();
         $oSoapWrapper->add('DevicesPartsService', function ($oService){
            $oService
-                ->wsdl('http://localhost:50442/SoapWebService.asmx?WSDL')
+                ->wsdl($this->sBaseUrlAWS)
                 ->trace(true)
                 ->classmap([
                     PartsOfDevice::class
@@ -63,49 +33,11 @@ class DevicePartsControllerApi extends Controller
                 new PartsOfDevice($sDeviceSN)
             ]);
 
-        //print_r($oResponse);
         $aParts = ($oResponse->PartsOfDeviceResult->DevicePart);
-        /*foreach ($aParts as $aPart){
-            print_r($aPart);
-            echo "<br /><br />";
-        }*/
+
         echo json_encode($aParts);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-       //
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
 

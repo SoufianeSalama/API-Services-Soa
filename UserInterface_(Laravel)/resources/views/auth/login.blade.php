@@ -11,7 +11,7 @@
 
             <fieldset>
 
-                <div class="row">
+                <div class="row" style="padding:10px;">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

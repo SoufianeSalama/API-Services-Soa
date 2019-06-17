@@ -17,10 +17,14 @@ public class DatabaseConnector
 
     private void Initialize()
     {
-        server = "localhost";
+        server = "soacl-database.cjn6wctbjclb.us-east-1.rds.amazonaws.com";
+        database = "soa_project";
+        username = "administrator";
+        password = "fLrsZEBnnc4QD35";
+       /*server = "localhost";
         database = "soa_project";
         username = "root";
-        password = "";
+        password = "";*/
 
         string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + username + ";" + "PASSWORD=" +password + ";";

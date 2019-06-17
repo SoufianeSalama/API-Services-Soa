@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecordService extends Model
 {
-    protected $sBaseUrl = "http://127.0.0.1:5000/api/";
+    protected $sBaseUrlAWS = "http://soacloud-restwebservice.us-east-1.elasticbeanstalk.com/api/";
+    protected $sBaseUrlLocal = "http://soacloud-restwebservice.us-east-1.elasticbeanstalk.com/api/";
 
     public function getRecords(){
-        $sUrl = $this->sBaseUrl . "records";
+        $sUrl = $this->sBaseUrlLocal . "records";
         $aRecords = json_decode($this->getDataWithCurl($sUrl));
         $oRecordList = [];
         if (!empty($aRecords)){
@@ -51,7 +52,7 @@ class RecordService extends Model
     }
 
     public function getRecord($iId){
-        $sUrl = $this->sBaseUrl . "records/" . $iId;
+        $sUrl = $this->sBaseUrlLocal . "records/" . $iId;
         $aRecords = json_decode($this->getDataWithCurl($sUrl));
         $oRecordList = [];
         if (!empty($aRecords)){
@@ -91,8 +92,9 @@ class RecordService extends Model
 
         return $oRecordList;
     }
+
     public function updateRecord($iId, $aFormData){
-        $sUrl = $this->sBaseUrl . "records/" . $iId;
+        $sUrl = $this->sBaseUrlLocal . "records/" . $iId;
         echo $sUrl;
         print_r($aFormData);
         //$sUrl = "https://soufiane.free.beeceptor.com";
@@ -104,7 +106,7 @@ class RecordService extends Model
     }
 
     public function newRecord($aFormData){
-        $sUrl = $this->sBaseUrl . "records";
+        $sUrl = $this->sBaseUrlLocal . "records";
         if ($this->postDataWithCurl($sUrl, $aFormData) != 200){
             // als de curl operatie geen HTTP code 200 krijgt is er iets misgelopen
             return false;

@@ -1,11 +1,9 @@
 var flag = 0;
-
+var API = "http://soacloud-userinterface.us-east-1.elasticbeanstalk.com"
 $(document).ready(function(){
 
 
-
 });
-
 
 function btnModalRecordInfo(sord, devicebrand, devicesn, complaint, clientinfo, statuskey, diagnose){
 
@@ -32,7 +30,7 @@ function btnmodalRecordDeviceParts(devicebrand, devicesn) {
 
     if (flag==0){
         flag = 1;
-        var ApiURL = "/api/deviceParts/" + devicesn;
+        var ApiURL = API + "/api/deviceParts/" + devicesn;
         $.get(ApiURL, function(data, status){
             var parts = jQuery.parseJSON(data);
             $("#loader").css("display", "none");
@@ -72,7 +70,8 @@ function btnSendForm(){
     var sord = $("#frmRecordSord").val();
     var diagnose  = $("#frmRecordDiagnose").val();
     var recordstatus  = $("#frmRecordStatus").val();
-    var ApiURL = "/api/records/" + sord;
+
+    var ApiURL =  API + "/update/" + sord;
 
     sendData = {
         "frmRecordDiagnose": diagnose,
@@ -96,8 +95,8 @@ function btnSendNewRecordForm(){
     var clientaddress  = $("#frmNewRecordClientAddress").val();
     var statuskey  = $("#frmNewRecordStatus").val();
 
-    var ApiURL = "/api/records/";
-    //var ApiURL = "http://salama.free.beeceptor.com";
+    var ApiURL =  API + "/create";
+
 
     sendData = {
         "frmNewRecordDeviceBrand": brand,
@@ -116,7 +115,7 @@ function btnSendNewRecordForm(){
             $('#modalNewRecord').modal('hide');
         },
         error: function(){
-            alert('Verbindingsproblemen met server \n Probeer later opnieuw');
+            alert('Verbindingsproblemen met server \nProbeer later opnieuw');
         }
     });
 }

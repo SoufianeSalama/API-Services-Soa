@@ -40,22 +40,13 @@ class RecordControllerApi extends Controller
     }
 
 
-    public function index()
+    public function getAllRecords()
     {
         $oRecordService = new RecordService();
         $aData = $oRecordService->getRecords();
         echo json_encode($aData);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -63,7 +54,7 @@ class RecordControllerApi extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function newRecord(Request $request)
     {
         $aFormData = array(
             "diagnose"  => "/",
@@ -85,29 +76,6 @@ class RecordControllerApi extends Controller
             return "nok";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $oRecordService = new RecordService();
-        $aData = $oRecordService->getRecord($id);
-        echo json_encode($aData);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -116,7 +84,7 @@ class RecordControllerApi extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateRecord(Request $request, $id)
     {
         $aFormData = array(
             "diagnose" => $request->input('frmRecordDiagnose'),
@@ -131,14 +99,4 @@ class RecordControllerApi extends Controller
             return "nok";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

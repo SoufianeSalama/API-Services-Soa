@@ -15,11 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });*/
 
-Route::get('/','RecordController@index')->name('records');
+//Route::get('/recordsapi', 'RecordController@recordslist'); //De ajax request worden gestuurd naar de API controller
 
-Route::get('/route', 'RouteController@index');
+
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('/route', 'RouteController@index')->name('route');
+
+});
+
+Route::get('/','RecordController@index')->name('records');
+Route::get('/records','RecordController@index')->name('records');
 
 Auth::routes();
-
-//Route::get('/', 'HomeController@index')->name('home');
-//Route::get('/home', 'HomeController@index')->name('home');

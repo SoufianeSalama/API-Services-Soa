@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div style="width: 640px; height: 480px" id="mapContainer"></div>
+                    <div style="width: 100%; height: 480px" id="mapContainer"></div>
                 </div>
             </div>
         </div>
@@ -40,7 +40,8 @@
         getRecords();
         var records;
         function getRecords(){
-            var apiURL = "/api/records/";
+            var API = "http://soacloud-userinterface.us-east-1.elasticbeanstalk.com"
+            var apiURL = API + "/recordsapi/";
 
             $.get(apiURL, function(data, status){
                 records = jQuery.parseJSON(data);
