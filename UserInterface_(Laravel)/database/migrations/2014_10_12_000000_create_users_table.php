@@ -25,12 +25,6 @@ class CreateUsersTable extends Migration
         });
     }
 
-    // uitleg extra kolom userid:
-    // 2 verschillende users:
-    //  User 1: een hersteller die op locatie bij klanten toestellen gaat ophalen/terugbrengen/mogelijk herstellen
-    //          deze krijgen een ander scherm te zien dan user 2 (google maps api)
-    //  User 2: een hersteller die op het bedrijf toestellen gaan herstellen
-
     /**
      * Reverse the migrations.
      *

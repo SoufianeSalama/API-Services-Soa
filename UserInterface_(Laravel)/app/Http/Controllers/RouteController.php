@@ -6,18 +6,25 @@ use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
     /**
-     * De ROUTE view, die een kaart (HereMaps Api) toont met locaties van klanten
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('route.index');
+        return view('dashboard.route.index');
     }
+
+
 }

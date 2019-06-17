@@ -1,8 +1,7 @@
 var flag = 0;
-var API = "http://soacloud-userinterface.us-east-1.elasticbeanstalk.com"
+
+
 $(document).ready(function(){
-
-
 });
 
 function btnModalRecordInfo(sord, devicebrand, devicesn, complaint, clientinfo, statuskey, diagnose){
@@ -28,28 +27,51 @@ function btnmodalRecordDeviceParts(devicebrand, devicesn) {
     $('#modalRecordDeviceParts').modal('show');
 
 
-    if (flag==0){
-        flag = 1;
-        var ApiURL = API + "/api/deviceParts/" + devicesn;
-        $.get(ApiURL, function(data, status){
+
+    var ApiURL =  localStorage.getItem('API_URL')  + "/deviceParts/" + devicesn;
+    /*$.get(ApiURL, function(data, status){
+        var parts = jQuery.parseJSON(data);
+        $("#loader").css("display", "none");
+        parts.forEach(function (part) {
+
+            $("#devicePartsTable tr").remove();
+            $('#devicePartsTable').append('<tr> ' +
+                '<td>' + part["description"] + '</td>' +
+                '<td>' + part["serialnumber"] + '</td>' +
+                '<td> €' + part["price"] + '</td>' +
+                '<td>' + part["availability"] + '</td>' +
+                '</tr>')
+
+        })
+    }).fail(function() {
+        $("#loader").css("display", "none");
+        alert('Verbindings problemen met de server');
+    });
+    */
+
+    $.ajax({
+        url: ApiURL,
+        type: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
             var parts = jQuery.parseJSON(data);
             $("#loader").css("display", "none");
+            $("#devicePartsTable tr").remove();
             parts.forEach(function (part) {
-
                 $('#devicePartsTable').append('<tr> ' +
                     '<td>' + part["description"] + '</td>' +
                     '<td>' + part["serialnumber"] + '</td>' +
                     '<td> €' + part["price"] + '</td>' +
                     '<td>' + part["availability"] + '</td>' +
                     '</tr>')
+
             })
+        }
+    });
 
-        }).fail(function() {
-            $("#loader").css("display", "none");
-            alert('Verbindings problemen met de server');
-        });
 
-    }
 }
 
 function btnActivateForm() {
@@ -71,7 +93,7 @@ function btnSendForm(){
     var diagnose  = $("#frmRecordDiagnose").val();
     var recordstatus  = $("#frmRecordStatus").val();
 
-    var ApiURL =  API + "/update/" + sord;
+    var ApiURL =  localStorage.getItem('API_URL')  + "/updateRecord/" + sord;
 
     sendData = {
         "frmRecordDiagnose": diagnose,
@@ -80,6 +102,9 @@ function btnSendForm(){
     $.ajax({
         url: ApiURL,
         type: 'PUT',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         data:  sendData,
         success: function () {
             alert("Record succesvol aangepast");
@@ -95,7 +120,7 @@ function btnSendNewRecordForm(){
     var clientaddress  = $("#frmNewRecordClientAddress").val();
     var statuskey  = $("#frmNewRecordStatus").val();
 
-    var ApiURL =  API + "/create";
+    var ApiURL =  localStorage.getItem('API_URL')  + "/newRecord";
 
 
     sendData = {
@@ -110,6 +135,9 @@ function btnSendNewRecordForm(){
         url: ApiURL,
         type: 'POST',
         data:  sendData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         success: function () {
             alert("Record succesvol toegevoegd");
             $('#modalNewRecord').modal('hide');

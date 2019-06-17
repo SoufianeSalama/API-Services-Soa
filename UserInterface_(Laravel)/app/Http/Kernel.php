@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http;
 
+namespace App\Http;
+header('Access-Control-Allow-Origin: *');
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel

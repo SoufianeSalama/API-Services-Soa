@@ -50,6 +50,44 @@ class RecordService extends Model
 
         return $oRecordList;
     }
+    public function getRouteRecords(){
+        $sUrl = $this->sBaseUrlLocal . "records";
+        $aRecords = json_decode($this->getDataWithCurl($sUrl));
+        $oRecordList = [];
+        if (!empty($aRecords)){
+
+            foreach ($aRecords as $aR) {
+                if ($aR->statuskey == 1 or $aR->statuskey == 4){
+                    $oRecord = new Record();
+                    $oRecord->sSord = $aR->sord;
+                    $oRecord->sDevicesn = $aR->devicesn;
+                    $oRecord->sBrand = $aR->brand;
+                    $oRecord->sClientinfo = $aR->clientinfo;
+                    $oRecord->sClientaddress = $aR->clientaddress;
+                    $oRecord->sComplaint = $aR->complaint;
+                    $oRecord->sDiagnose = $aR->diagnose;
+                    $oRecord->iStatuskey = $aR->statuskey;
+                    switch ($aR->statuskey) {
+                        case 1:
+                            $oRecord->sStatusDescription = "Toestel moet opgehaald worden bij de klant.";
+                            break;
+                        case 4:
+                            $oRecord->sStatusDescription = "Toestel is hersteld, moet verstuurd worden naar klant.";
+                            break;
+                        default:
+                            $oRecord->sStatusDescription = "Status onbekend.";
+                            break;
+
+                    }
+                    $oRecord->iUserid = $aR->userid;
+                    array_push($oRecordList, $oRecord);
+                }
+            }
+        }
+
+        return $oRecordList;
+    }
+
 
     public function getRecord($iId){
         $sUrl = $this->sBaseUrlLocal . "records/" . $iId;
@@ -95,7 +133,7 @@ class RecordService extends Model
 
     public function updateRecord($iId, $aFormData){
         $sUrl = $this->sBaseUrlLocal . "records/" . $iId;
-        echo $sUrl;
+        //echo $sUrl;
         print_r($aFormData);
         //$sUrl = "https://soufiane.free.beeceptor.com";
         if ($this->putDataWithCurl($sUrl, $aFormData) != 200){
@@ -152,7 +190,7 @@ class RecordService extends Model
         $response = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         //print_r($errors);
-        print_r($response);
+        //print_r($response);
 
         return $response;
     }

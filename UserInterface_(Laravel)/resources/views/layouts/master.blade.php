@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Soufiane Salama">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>TV-Repairs @yield('title')</title>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
@@ -31,7 +32,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">TV-Repairs</a>
+            <a class="navbar-brand" href="/">TV-Repairs</a>
         </div>
 
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -43,6 +44,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="/route">Routes</a>
+            </li>
+
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -58,8 +63,14 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+
+
+
+
+
                 </div>
             </li>
+
         </ul>
         </div>
     </div>
